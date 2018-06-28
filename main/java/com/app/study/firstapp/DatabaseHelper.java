@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(CUSTOMER_TABLE, null, contentValues);
 
-        //if date as inserted incorrectly it will return -1
+
         if (result == -1) {
             return false;
         } else {
@@ -103,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(ADMIN_TABLE, null, contentValues);
 
-        //if date as inserted incorrectly it will return -1
+
         if (result == -1) {
             return false;
         } else {

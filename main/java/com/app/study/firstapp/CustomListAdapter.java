@@ -3,7 +3,10 @@ package com.app.study.firstapp;
 /**
  * Created by study on 6/18/2018.
  */
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
@@ -12,16 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 
 public class CustomListAdapter extends ArrayAdapter<Customer>  {
+    CustomListAdapter customListAdapter;
     private static final String TAG ="CustomListAdapters" ;
     ArrayList<Customer> customerList;
     Context context;
@@ -38,9 +40,10 @@ public class CustomListAdapter extends ArrayAdapter<Customer>  {
         ImageButton edit;
         ImageButton delete;
     }
+//
 
-    public CustomListAdapter(ArrayList<Customer> customerList, Context context) {
-        super(context, R.layout.row_item, customerList);
+    public CustomListAdapter(Context context, int textViewResourceId, ArrayList<Customer> customerList ) {
+        super(context, textViewResourceId, customerList);
         this.customerList = customerList;
         this.context = context;
         mDatabaseHelper = new DatabaseHelper(context);
@@ -53,10 +56,8 @@ public class CustomListAdapter extends ArrayAdapter<Customer>  {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final Customer customer = getItem(position);
-//        final long id=getItemId(position)+1;
 
-        Log.i("CLA", "Customer position: " + customer);
+        final Customer customer = getItem(position);
         ViewHolder holder; // view lookup cache stored in tag
 
         final View result;
@@ -71,8 +72,6 @@ public class CustomListAdapter extends ArrayAdapter<Customer>  {
             holder.email = convertView.findViewById(R.id.email);
             holder.edit = convertView.findViewById(R.id.editButton);
             holder.delete = convertView.findViewById(R.id.cancelButton);
-
-
 
             result = convertView;
 
@@ -127,18 +126,42 @@ public class CustomListAdapter extends ArrayAdapter<Customer>  {
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                Cursor customerID= mDatabaseHelper.getCustomerID(customer.getCusEmail());
-                mDatabaseHelper.deleteDetails(customerID);
 
-                Log.i("CLA", "DELETE DETAILS FOR: " + customerID);
-                notifyDataSetChanged();
+
+                Builder builder1 = new Builder(context);
+
+                builder1.setMessage("Are you sure you want to delete");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Cursor customerID = mDatabaseHelper.getCustomerID(customer.getCusEmail());
+                                mDatabaseHelper.deleteDetails(customerID);
+                                customerList.remove(position);
+                                notifyDataSetChanged();
+                                Log.i("CLA", "DELETE DETAILS FOR: " + customerID);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
 
 
             }
-
-
         });
         // Return the completed view to render on screen
         return convertView;
@@ -166,47 +189,4 @@ public class CustomListAdapter extends ArrayAdapter<Customer>  {
         return false;
     }
 }
-
-
-//    @Override
-//    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-//
-//    }
-//
-//    @Override
-//    public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-//
-//    }
-//
-
-//
-//    @Override
-//    public boolean hasStableIds() {
-//        return false;
-//    }
-//
-//
-//
-//    @Override
-//    public int getItemViewType(int i) {
-//        return i;
-//    }
-//
-//    @Override
-//    public int getViewTypeCount() {
-//        return 0;
-//    }
-//
-
-//
-//    @Override
-//    public boolean areAllItemsEnabled() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isEnabled(int i) {
-//        return false;
-//    }
-
 

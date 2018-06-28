@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class EditDetails extends AppCompatActivity {
+    CustomListAdapter customListAdapter;
 
 
     private Button btnSave,btnCancel;
@@ -81,6 +82,9 @@ public class EditDetails extends AppCompatActivity {
             public void onClick(View view) {
                 mDatabaseHelper.updateCustomerDetails(pid,selectedfName,selectedsName,
                         selectedDOB,selectedID,selectedgender,selectedEmail);
+
+
+
                 toastMessage("Data Successfully updated!");
                 Intent intent= new Intent( EditDetails.this,CustomersRegistered.class);
                 startActivity(intent);

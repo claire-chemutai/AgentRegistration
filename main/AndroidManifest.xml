@@ -21,7 +21,6 @@
         <activity android:name=".AdminPage" />
         <activity android:name=".CustomersRegistered" />
         <activity android:name=".EditDetails" />
-        <activity android:name=".RegisteredCustomers"></activity>
     </application>
 
 </manifest>
