@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid
+        android:color="#CCdce2ef"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JUNE 20"/>
+
+
+    <padding android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp"
+        />
+
+    <corners android:bottomRightRadius="30dp" android:bottomLeftRadius="30dp"
+        android:topLeftRadius="30dp" android:topRightRadius="30dp"/>
+</shape>
