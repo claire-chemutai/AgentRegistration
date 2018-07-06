@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">First App</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_cam">camActivity</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+</resources>
